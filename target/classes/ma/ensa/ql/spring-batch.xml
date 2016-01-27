@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:batch="http://www.springframework.org/schema/batch"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+		http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-2.2.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.2.xsd">	
+	
+<context:component-scan base-package="ma.ensa.ql,ma.ensa.dao"/>
+<context:annotation-config/> 
+
+	<bean id="transactionReader" class="org.springframework.batch.item.file.FlatFileItemReader">
+				<property name="resource" value="transaction.csv"/>
+				<property name="lineMapper">
+					<bean class="org.springframework.batch.item.file.mapping.DefaultLineMapper">
+						<property name="lineTokenizer">
+							<bean class="org.springframework.batch.item.file.transform.DelimitedLineTokenizer">
+									<property name="delimiter" value=";"/>
+									<property name="names" value="id,user_login,montant"/>
+							</bean>
+						</property>
+						<property name="fieldSetMapper">
+							<bean class="org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper">
+									<property name="targetType" value="ma.ensa.model.Transaction"/>
+							</bean>
+						</property>
+					</bean>
+				</property>	
+	</bean> 
+	<bean id="sessionFactory"    class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">    
+	       
+	         <!-- <beans:property name="dataSource" ref="dataSource" />        
+	           	
+	          <property name="hibernateProperties">
+				       <props>
+				         <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				         <prop key="hibernate.show_sql">true</prop>
+				       </props>
+	    	  </property>
+	 
+	    	<property name="mappingResources">
+				<list>
+			          <value>ma.ensa.model.User</value>
+			     	     <value>ma.ensa.model.Roles</value>
+					  <value>ma.ensa.model.Transaction</value>
+				</list>
+	     	</property> -->
+	     	 <property name="configLocation" value="classpath:hibernate.cfg.xml"/> 
+    </bean>
+    <!-- <task:executor id="executor" pool-size="10" /> -->
+	<bean id="jobLauncher" class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
+			<property name="jobRepository" ref="jobRepository"/>
+			<!-- <property name="taskExecutor" ref="executor"/> -->
+	</bean> 
+	<bean id="jobRepository" class="org.springframework.batch.core.repository.support.MapJobRepositoryFactoryBean">
+			<property name="transactionManager" ref="transactionManager"/>
+	</bean> 
+	
+	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		  <property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<!-- <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+
+	 	<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:3306/ql" />
+		<property name="username" value="root" />
+		<property name="password" value="" /> 
+		
+	</bean> -->
+	<bean name="transactionProcess" class="ma.ensa.ql.ItemProcessorImpl"/>
+	<bean name="transactionWriter" class="ma.ensa.ql.ItemWriterImpl"/>
+	<bean name="batchLauncher" class="ma.ensa.ql.BatchLauncher"/>
+	<bean name="simpleListener" class="ma.ensa.ql.JobListenerImpl"/>
+	<batch:job id="importTransaction">
+		<batch:step id="readWriteTransaction">
+				<batch:tasklet>
+						<batch:chunk 
+						reader="transactionReader"
+						processor="transactionProcess"
+						writer="transactionWriter"
+						commit-interval="2"/>
+				</batch:tasklet>
+		</batch:step>
+		<batch:listeners>
+			<batch:listener ref="simpleListener"/>
+		</batch:listeners>
+	</batch:job>
+	<!-- <bean id="jobOperator" class="org.springframework.batch.core.launch.support.SimpleJobOperator">
+		<property name="jobRepository" ref="jobRepository"/>
+		<property name="jobLauncher" ref="jobLauncher"/>
+	</bean>
+ -->	
+<task:scheduled-tasks>
+  <task:scheduled ref="batchLauncher" method="run" cron=" * 2 * * * * " />
+</task:scheduled-tasks>
+<task:annotation-driven/> 
+</beans>
+ 
