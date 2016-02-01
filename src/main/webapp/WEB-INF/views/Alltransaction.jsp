@@ -9,6 +9,7 @@
 </head>
 <body>
 	<div  style="box-shadow: gray 0px 0px 6px 6px;width:600px;margin-left:300px" align="center" >
+		<img alt="banque" src="${pageContext.request.contextPath}/resources/images.jpg" style="width:600px;height:100px">
 		<c:if test="${size>0}">
 			<table border="2" cellpadding="3px" cellspacing="0px">
 					<caption style="margin-bottom:8px"><b><u>liste des cash retracted</u></b></caption>

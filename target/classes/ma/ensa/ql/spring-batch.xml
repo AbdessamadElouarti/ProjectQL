@@ -50,10 +50,8 @@
 	     	</property> -->
 	     	 <property name="configLocation" value="classpath:hibernate.cfg.xml"/> 
     </bean>
-    <!-- <task:executor id="executor" pool-size="10" /> -->
 	<bean id="jobLauncher" class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
 			<property name="jobRepository" ref="jobRepository"/>
-			<!-- <property name="taskExecutor" ref="executor"/> -->
 	</bean> 
 	<bean id="jobRepository" class="org.springframework.batch.core.repository.support.MapJobRepositoryFactoryBean">
 			<property name="transactionManager" ref="transactionManager"/>
@@ -89,11 +87,7 @@
 			<batch:listener ref="simpleListener"/>
 		</batch:listeners>
 	</batch:job>
-	<!-- <bean id="jobOperator" class="org.springframework.batch.core.launch.support.SimpleJobOperator">
-		<property name="jobRepository" ref="jobRepository"/>
-		<property name="jobLauncher" ref="jobLauncher"/>
-	</bean>
- -->	
+	
 <task:scheduled-tasks>
   <task:scheduled ref="batchLauncher" method="run" cron=" * 2 * * * * " />
 </task:scheduled-tasks>

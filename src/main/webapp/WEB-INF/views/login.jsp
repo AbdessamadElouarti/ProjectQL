@@ -4,25 +4,26 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>application </title>
 </head>
 <body>
 		<div style="box-shadow: gray 0px 0px 6px 6px;width:600px;margin-left:300px" align="center" >
+			<img alt="banque" src="${pageContext.request.contextPath}/resources/images.jpg" style="width:600px;height:100px">
 			 <form action="j_spring_security_check" method="post">
 		            <center>
 		            <table  width="30%" cellpadding="6px" cellspacing="0px">
 		                <thead>
 		                    <tr>
-		                        <th colspan="2">Login Here</th>
+		                        <th colspan="2">page de Login</th>
 		                    </tr>
 		                </thead>
 		                <tbody>
 		                    <tr>
-		                        <td>User Name</td>
+		                        <td>login</td>
 		                        <td><input type="text" name="username"  /></td>
 		                    </tr>
 		                    <tr>
-		                        <td>Password</td>
+		                        <td>mot de passe</td>
 		                        <td><input type="password" name="password"  /></td>
 		                    </tr>
 		                    <tr>

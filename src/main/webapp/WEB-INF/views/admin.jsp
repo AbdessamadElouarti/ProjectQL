@@ -8,12 +8,16 @@ a
 {
 	text-decoration: none;
 	box-shadow:gray 0px 0px 1px 1px;
-	padding:7px
+	padding:5px
 }
 li
 {
 	float:left;
-	padding:7px
+}
+ul
+{
+	margin-top:3px;
+	padding-left:0px
 }
 a:hover
 {
@@ -25,13 +29,14 @@ a:hover
 <title>Insert title here</title>
 </head>
 <body>
-	<div style="box-shadow: gray 0px 0px 6px 6px;width:600px;margin-left:300px;height:150px" align="center" >
-		<table align="left" style="margin-left:20px;margin-top:10px">
+	<div style="box-shadow: gray 0px 0px 6px 6px;width:600px;margin-left:300px;height:200px" align="center" >
+		<img alt="banque" src="${pageContext.request.contextPath}/resources/images.jpg" style="width:600px;height:100px">
+		<table align="left">
 			<tr>
 				<td>
-					<ul style="float:left;list-style:none;">
+					<ul style="float:left;list-style:none">
 						<li><a href="Alltransaction">voir les transactions</a></li>
-						<li><a href="jspring_security_logout">Se déconnecter</a></li>
+						<li><a href="j_spring_security_logout">Se déconnecter</a></li>
 					</ul>
 				</td>
 			</tr>
@@ -39,8 +44,6 @@ a:hover
 				<td>Bonjour Monsieur : ${nom_prenom}</td>
 			</tr>
 		</table>
-		
-	<p></p>
 	</div>
 
 </body>

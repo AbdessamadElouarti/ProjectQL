@@ -10,8 +10,15 @@
 <body>
 		
 			<div  style="box-shadow: gray 0px 0px 6px 6px;width:600px;margin-left:300px" align="center" >
+					<img alt="banque" src="${pageContext.request.contextPath}/resources/images.jpg" style="width:600px;height:100px">
 					<div style="color:green">${done}</div>			
+			<pre>
+			</pre>
+				<div style="text-align:left;margin-left:10px"><a href="http://localhost:8080/ql/admin">retour</a></div>
+			
+			
 			</div>	
+			
 			
 </body>
 </html>

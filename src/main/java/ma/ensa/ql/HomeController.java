@@ -49,13 +49,6 @@ public class HomeController
 		this.dao = dao;
 	}
 	
-	@RequestMapping(value ={"/","/home"})
-	public ModelAndView home() 
-	{
-		ModelAndView modelview=new ModelAndView();
-		modelview.setViewName("home");
-		return modelview;
-	}  
 	@RequestMapping("/listUsers")
 	public ModelAndView lisUsers()
 	{
@@ -75,15 +68,15 @@ public class HomeController
 		modelview.setViewName("admin");
 		return modelview;
 	}  
-	@RequestMapping("/executeBatch")
-	public void executeBatch() throws Exception
-	{
-		//ModelAndView modelview=new ModelAndView();
-		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("ma/ensa/ql/spring-batch.xml");
-		//JobLauncher jobLauncher=(JobLauncher)context.getBean("jobLauncher");
-		//Job job=(Job)context.getBean("importTransaction");
-		//jobLauncher.run(job, new JobParameters());
-	}
+//	@RequestMapping("/executeBatch")
+//	public void executeBatch() throws Exception
+//	{
+//		//ModelAndView modelview=new ModelAndView();
+//		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("ma/ensa/ql/spring-batch.xml");
+//		//JobLauncher jobLauncher=(JobLauncher)context.getBean("jobLauncher");
+//		//Job job=(Job)context.getBean("importTransaction");
+//		//jobLauncher.run(job, new JobParameters());
+//	}
 	@RequestMapping("/client")
 	public ModelAndView client()
 	{	
@@ -176,7 +169,7 @@ public class HomeController
 			modelview.setViewName("reglerCA");
 			return modelview;
 	}
-	@RequestMapping("/login")
+	@RequestMapping(value ={"/","/login"})
 	public ModelAndView login()
 	{
 		ModelAndView modelview=new ModelAndView();

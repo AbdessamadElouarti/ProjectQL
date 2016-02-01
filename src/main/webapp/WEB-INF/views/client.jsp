@@ -7,7 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<div style="box-shadow: gray 0px 0px 6px 6px;width:600px;margin-left:300px;height:150px" align="center" >
+	<div style="box-shadow: gray 0px 0px 6px 6px;width:600px;margin-left:300px;height:200px" align="center" >
+		<img alt="banque" src="${pageContext.request.contextPath}/resources/images.jpg" style="width:600px;height:100px">
 		<table cellpadding="6px" cellspacing="4px">
 			<tr>
 				<th>Bonjour Monsieur :</th><td>${nom_prenom}</th>
